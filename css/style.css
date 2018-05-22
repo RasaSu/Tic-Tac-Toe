@@ -1,0 +1,66 @@
+body {
+    background: rgb(3, 1, 29, 0.9);
+    font-size: 0;
+}
+* {
+    box-sizing: border-box;
+}
+.gameBoard {
+    width: 90vmin;
+    margin: 5vmin auto;
+    background-color: rgba(3, 55, 100, 0.5);
+}
+.row > div {
+    height: 30vmin;
+    width: 30vmin;
+    float: left;
+    cursor: pointer;
+}
+.row > div:not(:last-of-type)  {
+    border-right: 4px solid rgba(250, 252, 253, 0.2); 
+}
+.row:not(:last-of-type) > div {
+    border-bottom: 4px solid rgba(250, 252, 253, 0.2); 
+}
+.x {
+    width: 50%;
+    height: 50%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: not-allowed;
+}
+div.x::before,
+div.x::after {
+    position: absolute;
+    top: 50%;
+    content: '';
+    width: 100%;
+    height: 4px; 
+    background-color: #fff;
+}
+
+div.x::before {
+    transform: rotate(45deg);
+}
+
+div.x::after {
+    transform: rotate(-45deg);
+}
+
+.o {
+    border: 3px solid #fff;
+    width: 50%;
+    height: 50%;
+    -webkit-border-radius:75px;
+    -moz-border-radius:75px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: not-allowed;
+}
+.notAllowed {
+    cursor: not-allowed !important;
+}

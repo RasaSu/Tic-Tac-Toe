@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Time to Play!</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <div class="gameBoard">
+        <div class="row">
+            <div id="a1" class="" onclick="myFunction(event)"></div>
+            <div id="b1" class="" onclick="myFunction(event)"></div>
+            <div id="c1" class="" onclick="myFunction(event)"></div>
+        </div>
+        <div class="row">
+            <div id="a2" class="" onclick="myFunction(event)"></div>
+            <div id="b2" class="" onclick="myFunction(event)"></div>
+            <div id="c2" class="" onclick="myFunction(event)"></div>
+        </div>
+        <div class="row">
+            <div id="a3" class="" onclick="myFunction(event)"></div>
+            <div id="b3" class="" onclick="myFunction(event)"></div>
+            <div id="c3" class="" onclick="myFunction(event)"></div>
+        </div>
+    </div>
+</body>
+<script>
+    /*
+    //checking if game board has emply fields
+    */
+    var gameSequence = [];
+    play();
+    function play() {
+        //formating an array to save game information
+        gameSequence.push(document.getElementById("a1"));
+        gameSequence.push(document.getElementById("b1"));
+        gameSequence.push(document.getElementById("c1"));
+        gameSequence.push(document.getElementById("a2"));
+        gameSequence.push(document.getElementById("b2"));
+        gameSequence.push(document.getElementById("c2"));
+        gameSequence.push(document.getElementById("a3"));
+        gameSequence.push(document.getElementById("b3"));
+        gameSequence.push(document.getElementById("c3"));
+        
+        for(i=0; i<9; i++) {
+            var x = gameSequence[i];
+            if(!x.hasChildNodes()){
+                continue;
+            } else {
+                x.children.classList;
+            }
+        }
+    }
+    var saveIndex;
+    function myFunction(event) { 
+        var boxId = event.target.id;
+        var box = document.getElementById(boxId);
+        if (!box.hasChildNodes()) {
+            var node = document.createElement("div");
+            saveIndex = saveIndex | 0;
+            if(saveIndex == 0) {
+                node.classList.add("x");
+                saveIndex = 1;
+            } else {
+                node.classList.add("o");
+                saveIndex = 0;
+            }
+            box.appendChild(node);
+            box.classList.add("notAllowed");
+        }
+        else {
+            alert("Choose another field!");
+        }
+    }
+</script>
+</html>
