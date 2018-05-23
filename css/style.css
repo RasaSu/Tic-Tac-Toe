@@ -8,7 +8,7 @@ body {
 .gameBoard {
     width: 90vmin;
     margin: 5vmin auto;
-    background-color: rgba(3, 55, 100, 0.5);
+    background-color: rgba(3, 55, 100, 0.9);
 }
 .row > div {
     height: 30vmin;
