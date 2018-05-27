@@ -9,6 +9,15 @@
 </head>
 <body>
     <div id="board"></div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>PLAY AGAIN !</p>
+        </div>
+    </div>
+
 </body>
 <script>
     
@@ -33,111 +42,153 @@
     gameBoard.width = game.boardParams.width;
     gameBoard.height = game.boardParams.height;
 
-//drawing game board
-
-    for(let i = 0; i < game.boardParams.height; i++) {
-        let row = newElem("div");
-        board.appendChild(row);
-        row.classList.add("row");
-        for(let j = 0; j < game.boardParams.width; j++) {
-            let cell = newElem("div");
-            row.appendChild(cell);
-            cell.classList.add("cell");
-            cell.id = String.fromCharCode(i + "a".charCodeAt(0)) + j;
-            gameBoard.push(cell.id);
-            cell.addEventListener('click', click, false);
+    //drawing game board
+    function drawBoard() {
+        while (board.hasChildNodes()) {
+            board.removeChild(board.firstChild);
+        }
+        for(let i = 0; i < game.boardParams.height; i++) {
+            let row = newElem("div");
+            board.appendChild(row);
+            row.classList.add("row");
+            for(let j = 0; j < game.boardParams.width; j++) {
+                let cell = newElem("div");
+                row.appendChild(cell);
+                cell.classList.add("cell");
+                cell.id = String.fromCharCode(i + "a".charCodeAt(0)) + j;
+                gameBoard.push(cell.id);
+                cell.addEventListener('click', click, false);
+            }
         }
     }
-    
-var win = [];
-possibleWinners();
 
-function possibleWinners() {
-    win.push(["a0", "a1", "a2"]);
-    win.push(["b0", "b1", "b2"]);
-    win.push(["c0", "c1", "c2"]);
-    win.push(["a0", "b0", "c0"]);
-    win.push(["a1", "b1", "c1"]);
-    win.push(["a2", "b2", "c2"]);
-    win.push(["a0", "b1", "c2"]);
-    win.push(["a2", "b1", "c0"]);
-}
+    var win = [];
+    possibleWinners();
 
-var playerX = [];
-var playerO = [];
-var moves = 0;
+    function possibleWinners() {
+        win.push(["a0", "a1", "a2"]);
+        win.push(["b0", "b1", "b2"]);
+        win.push(["c0", "c1", "c2"]);
+        win.push(["a0", "b0", "c0"]);
+        win.push(["a1", "b1", "c1"]);
+        win.push(["a2", "b2", "c2"]);
+        win.push(["a0", "b1", "c2"]);
+        win.push(["a2", "b1", "c0"]);
+    }
 
+    var playerX = [];
+    var playerO = [];
 
-var saveIndex;
-function click(event) {
-    var cellId = event.target.id;
-    var cell = document.getElementById(cellId);
-    if (!cell.hasChildNodes()) {
-        var node = document.createElement("div");
-        saveIndex = saveIndex | 1;
-        if(saveIndex == 1) {
-            node.classList.add("x");
-            saveIndex = 2;
-            playerX.push(cellId);
-            playerX.sort();
-        } else {
-            node.classList.add("o");
-            saveIndex = 1;
-            playerO.push(cellId);
-            playerO.sort();
+    function reset()
+    {
+        playerX = [];
+        playerO = [];
+    }
+
+    var saveIndex;
+    function click(event) {
+        var cellId = event.target.id;
+        var cell = elem(cellId);
+        if (!cell.hasChildNodes()) {
+            var node = document.createElement("div");
+            saveIndex = saveIndex | 1;
+            if(saveIndex == 1) {
+                node.classList.add("x");
+                saveIndex = 2;
+                playerX.push(cellId);
+                playerX.sort();
+            } else {
+                node.classList.add("o");
+                saveIndex = 1;
+                playerO.push(cellId);
+                playerO.sort();
+            }
+            cell.appendChild(node);
+            cell.removeEventListener('click', click);
+            cell.classList.add("notAllowed");  
+        }  
+        var check = isWinner();
+        if(check[0]) {
+            //add animation to winning set
+            for(let z=0; z < check[1].length; z++) {
+                elem(check[1][z]).classList.add("blink_me");
+            }
+            setTimeout(function() {
+                displayModal();
+            }, 5000);
+        } else if (playerX.length + playerO.length == 9) {
+            displayModal();
         }
-        cell.appendChild(node);
-        cell.removeEventListener('click', click);
-        cell.classList.add("notAllowed");  
-        moves++;
-    }  
-    if(isWinner()) {
-        alert("win");
     }
-}
-
-function isWinner() {
-    var winning = false;
-    var playerSet = [];
-
-    if (saveIndex == 2) {
-        playerSet = playerX;
+    function displayModal() {
+        // Get the modal
+        var modal = elem('myModal');
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        // When the user clicks on the button, open the modal 
+        modal.style.display = "block";
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+            reset();
+            drawBoard();
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                reset();
+                drawBoard();
+            }
+        }
     }
-    else {
-        playerSet = playerO;
-    }
-//winning only if there has been enough moves
-    if(playerSet.length >= gameBoard.width) {
-        //go through all possible win scenarios
-        for(let i=0 ; i < win.length; i++) {
-            var winSet = win[i];
-            var winSetFound = true;
+    function isWinner() {
+        var winning = false;
+        var playerSet = [];
 
-            //go through every element of winSet
-            for(let j=0; j < winSet.length; j++) {
-                var match = false;
-                //go through every element of playerSet
-                for(let x=0; x < playerSet.length; x++) {
-                    if(playerSet[x] == winSet[j]) {
-                        match = true;
+        if (saveIndex == 2) {
+            playerSet = playerX;
+        }
+        else {
+            playerSet = playerO;
+        }
+        var setSet = [];
+    //winning only if there has been enough moves
+        if(playerSet.length >= gameBoard.width) {
+            //go through all possible win scenarios
+            for(let i=0 ; i < win.length; i++) {
+                var winSet = win[i];
+                var winSetFound = true;
+
+                //go through every element of winSet
+                for(let j=0; j < winSet.length; j++) {
+                    var match = false;
+                    //go through every element of playerSet
+                    for(let x=0; x < playerSet.length; x++) {
+                        if(playerSet[x] == winSet[j]) {
+                            match = true;
+                            break;
+                        }
+                    }
+                    // if value not found, move on to another set
+                    if (match == false) {
+                        winSetFound = false;
                         break;
                     }
                 }
-                // if value not found, move on to another set
-                if (match == false) {
-                    winSetFound = false;
+
+                if (winSetFound == true) {
+                    winning = true;
+                    setSet = winSet;
                     break;
                 }
             }
-
-            if (winSetFound == true) {
-                winning = true;
-                break;
-            }
+            
         }
-          
+
+        return [winning, setSet];
     }
-    return winning;
-}
+
+    window.onload = drawBoard;
 </script>
 </html>
