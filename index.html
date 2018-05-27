@@ -33,9 +33,7 @@
     gameBoard.width = game.boardParams.width;
     gameBoard.height = game.boardParams.height;
 
-    for(let i = 0; i<gameBoard.height; i++) {
-        gameBoard[i] = [];
-    }
+//drawing game board
 
     for(let i = 0; i < game.boardParams.height; i++) {
         let row = newElem("div");
@@ -46,40 +44,100 @@
             row.appendChild(cell);
             cell.classList.add("cell");
             cell.id = String.fromCharCode(i + "a".charCodeAt(0)) + j;
-            gameBoard[i][j] = [];
-            gameBoard[i][j][0] = cell.id;
+            gameBoard.push(cell.id);
             cell.addEventListener('click', click, false);
         }
     }
     
-    var saveIndex;
-    function click(event) {
-        var cellId = event.target.id;
-        var cell = document.getElementById(cellId);
-        if (!cell.hasChildNodes()) {
-            var node = document.createElement("div");
-            saveIndex = saveIndex | 1;
-            if(saveIndex == 1) {
-                node.classList.add("x");
-                saveIndex = 2;
-            } else {
-                node.classList.add("o");
-                saveIndex = 1;
-            }
-            cell.appendChild(node);
-            cell.removeEventListener('click', click);
+var win = [];
+possibleWinners();
 
-            for(let i = 0; i < gameBoard.width; i++) {
-                for(let j = 0; j < gameBoard.height; j++) {
-                    if(cellId == gameBoard[i][j]) {
-                        gameBoard[i][j][1] = saveIndex;
+function possibleWinners() {
+    win.push(["a0", "a1", "a2"]);
+    win.push(["b0", "b1", "b2"]);
+    win.push(["c0", "c1", "c2"]);
+    win.push(["a0", "b0", "c0"]);
+    win.push(["a1", "b1", "c1"]);
+    win.push(["a2", "b2", "c2"]);
+    win.push(["a0", "b1", "c2"]);
+    win.push(["a2", "b1", "c0"]);
+}
+
+var playerX = [];
+var playerO = [];
+var moves = 0;
+
+
+var saveIndex;
+function click(event) {
+    var cellId = event.target.id;
+    var cell = document.getElementById(cellId);
+    if (!cell.hasChildNodes()) {
+        var node = document.createElement("div");
+        saveIndex = saveIndex | 1;
+        if(saveIndex == 1) {
+            node.classList.add("x");
+            saveIndex = 2;
+            playerX.push(cellId);
+            playerX.sort();
+        } else {
+            node.classList.add("o");
+            saveIndex = 1;
+            playerO.push(cellId);
+            playerO.sort();
+        }
+        cell.appendChild(node);
+        cell.removeEventListener('click', click);
+        cell.classList.add("notAllowed");  
+        moves++;
+    }  
+    if(isWinner()) {
+        alert("win");
+    }
+}
+
+function isWinner() {
+    var winning = false;
+    var playerSet = [];
+
+    if (saveIndex == 2) {
+        playerSet = playerX;
+    }
+    else {
+        playerSet = playerO;
+    }
+//winning only if there has been enough moves
+    if(playerSet.length >= gameBoard.width) {
+        //go through all possible win scenarios
+        for(let i=0 ; i < win.length; i++) {
+            var winSet = win[i];
+            var winSetFound = true;
+
+            //go through every element of winSet
+            for(let j=0; j < winSet.length; j++) {
+                var match = false;
+                //go through every element of playerSet
+                for(let x=0; x < playerSet.length; x++) {
+                    if(playerSet[x] == winSet[j]) {
+                        match = true;
+                        break;
                     }
-
+                }
+                // if value not found, move on to another set
+                if (match == false) {
+                    winSetFound = false;
+                    break;
                 }
             }
-            cell.classList.add("notAllowed");  
+
+            if (winSetFound == true) {
+                winning = true;
+                break;
+            }
         }
-        
+          
     }
+    return winning;
+}
 </script>
 </html>
