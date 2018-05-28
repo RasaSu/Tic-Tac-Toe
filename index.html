@@ -1,166 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TIC TAC TOE</title>
     <style>
-        
-body {
-    background-color: rgb(3, 1, 29, 0.9);
-}
-#board * {
-    /* margin: 0; */
-    padding: 0;
-    font-size: 0;
-    font-weight: bold;
-    color: rgb(255, 251, 251, 0.7);
-    box-sizing: border-box;
-}
-#board {
-    width: 460px;
-    height: auto;
-    margin: 30px auto;
-}
-.cell {
-    width: 150px;
-    height: 150px;
-    display: inline-block;
-    background: rgba(59, 56, 211, 0.9);
-    cursor: pointer;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    border-left: 10px solid rgba(103, 95, 216, 0.6); 
-    border-bottom: 10px solid rgba(103, 95, 216, 0.6); 
-}
-.row > div:not(:last-of-type) {
-    margin-right: 5px;
-}
-.row:not(:last-of-type) {
-    margin-bottom: 5px;
-}
-.x {
-    width: 50%;
-    height: 50%;
-    position: relative;
-    cursor: not-allowed;
-    animation: transformer 0.2s ease-in 0s 1;
-    animation-fill-mode: forwards;
-}
-div.x::before,
-div.x::after {
-    position: absolute;
-    top: 50%;
-    content: '';
-    width: 100%;
-    height: 20px; 
-    background-color: rgb(236, 241, 243);
-}
+        body {
+            background-color: rgb(3, 1, 29, 0.9);
+        }
 
-div.x::before {
-    transform: rotate(45deg);
-}
+        #board * {
+            /* margin: 0; */
+            padding: 0;
+            font-size: 0;
+            font-weight: bold;
+            color: rgb(255, 251, 251, 0.7);
+            box-sizing: border-box;
+        }
 
-div.x::after {
-    transform: rotate(-45deg);
-}
+        #board {
+            width: 460px;
+            height: auto;
+            margin: 30px auto;
+        }
 
-.o {
-    border: 20px solid rgb(236, 241, 243);
-    width: 50%;
-    height: 50%;
-    -webkit-border-radius:75px;
-    -moz-border-radius:75px;
-    position: relative;
-    cursor: not-allowed;
-    animation: transformer 0.2s ease-in 0s 1;
-    -webkit-animation: transformer 0.2s ease-in 0s 1;
-    animation-fill-mode: forwards;
-}
-@keyframes transformer {
-    from {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);       
-    }
-    to {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-@-webkit-keyframes transformer {
-    from {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);       
-    }
-    to {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-.notAllowed {
-    cursor: not-allowed;
-}
-.blink_me {
-    animation: blinker 2s linear infinite;
-    -webkit-animation: blinker 2s linear infinite;
-  }
-  
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
-}
-@-webkit-keyframes blinker {
-    50% {
-        opacity: 0;
-    }
-}
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+        .cell {
+            width: 150px;
+            height: 150px;
+            display: inline-block;
+            background: rgba(59, 56, 211, 0.9);
+            cursor: pointer;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            border-left: 10px solid rgba(103, 95, 216, 0.6);
+            border-bottom: 10px solid rgba(103, 95, 216, 0.6);
+        }
 
-/* Modal Content/Box */
-.modal-content {
-    color: rgb(225, 234, 255);
-    background-color: #5e61f1;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    width: 50%;
-}
-.modal-content p {
-    text-align: center;
-}
-/* The Close Button */
-.close {
-    color: rgb(221, 219, 255);
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+        .row>div:not(:last-of-type) {
+            margin-right: 5px;
+        }
 
-.close:hover,
-.close:focus {
-    color: rgb(181, 190, 209);
-    text-decoration: none;
-    cursor: pointer;
-}
+        .row:not(:last-of-type) {
+            margin-bottom: 5px;
+        }
+
+        .x {
+            width: 50%;
+            height: 50%;
+            position: relative;
+            cursor: not-allowed;
+            animation: transformer 0.2s ease-in 0s 1;
+            animation-fill-mode: forwards;
+        }
+
+        div.x::before,
+        div.x::after {
+            position: absolute;
+            top: 50%;
+            content: '';
+            width: 100%;
+            height: 20px;
+            background-color: rgb(236, 241, 243);
+        }
+
+        div.x::before {
+            transform: rotate(45deg);
+        }
+
+        div.x::after {
+            transform: rotate(-45deg);
+        }
+
+        .o {
+            border: 20px solid rgb(236, 241, 243);
+            width: 50%;
+            height: 50%;
+            -webkit-border-radius: 75px;
+            -moz-border-radius: 75px;
+            position: relative;
+            cursor: not-allowed;
+            animation: transformer 0.2s ease-in 0s 1;
+            -webkit-animation: transformer 0.2s ease-in 0s 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes transformer {
+            from {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            to {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @-webkit-keyframes transformer {
+            from {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            to {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .notAllowed {
+            cursor: not-allowed;
+        }
+
+        .blink_me {
+            animation: blinker 2s linear infinite;
+            -webkit-animation: blinker 2s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* The Modal (background) */
+
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+
+        .modal-content {
+            color: rgb(225, 234, 255);
+            background-color: #5e61f1;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            width: 50%;
+        }
+
+        .modal-content p {
+            text-align: center;
+        }
+
+        /* The Close Button */
+
+        .close {
+            color: rgb(221, 219, 255);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: rgb(181, 190, 209);
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <div id="board"></div>
     <!-- The Modal -->
@@ -173,177 +201,177 @@ div.x::after {
     </div>
 
 
-<script>
-    
-    const game = {
-        boardParams: {
-            width: 3,
-            height: 3
-        }
-    }
+    <script>
 
-    function elem(name) {
-        return document.getElementById(name);
-    }
-
-    function newElem(name) {
-        return document.createElement(name);
-    }
-
-    const board = elem("board");
-    
-    var gameBoard = [];
-    gameBoard.width = game.boardParams.width;
-    gameBoard.height = game.boardParams.height;
-
-    //drawing game board
-    function drawBoard() {
-        while (board.hasChildNodes()) {
-            board.removeChild(board.firstChild);
-        }
-        for(let i = 0; i < game.boardParams.height; i++) {
-            let row = newElem("div");
-            board.appendChild(row);
-            row.classList.add("row");
-            for(let j = 0; j < game.boardParams.width; j++) {
-                let cell = newElem("div");
-                row.appendChild(cell);
-                cell.classList.add("cell");
-                cell.id = String.fromCharCode(i + "a".charCodeAt(0)) + j;
-                gameBoard.push(cell.id);
-                cell.addEventListener('click', click, false);
+        const game = {
+            boardParams: {
+                width: 3,
+                height: 3
             }
         }
-    }
 
-    var win = [];
-    possibleWinners();
+        function elem(name) {
+            return document.getElementById(name);
+        }
 
-    function possibleWinners() {
-        win.push(["a0", "a1", "a2"]);
-        win.push(["b0", "b1", "b2"]);
-        win.push(["c0", "c1", "c2"]);
-        win.push(["a0", "b0", "c0"]);
-        win.push(["a1", "b1", "c1"]);
-        win.push(["a2", "b2", "c2"]);
-        win.push(["a0", "b1", "c2"]);
-        win.push(["a2", "b1", "c0"]);
-    }
+        function newElem(name) {
+            return document.createElement(name);
+        }
 
-    var playerX = [];
-    var playerO = [];
+        const board = elem("board");
 
-    function reset()
-    {
-        playerX = [];
-        playerO = [];
-    }
+        var gameBoard = [];
+        gameBoard.width = game.boardParams.width;
+        gameBoard.height = game.boardParams.height;
 
-    var saveIndex;
-    function click(event) {
-        var cellId = event.target.id;
-        var cell = elem(cellId);
-        if (!cell.hasChildNodes()) {
-            var node = document.createElement("div");
-            saveIndex = saveIndex | 1;
-            if(saveIndex == 1) {
-                node.classList.add("x");
-                saveIndex = 2;
-                playerX.push(cellId);
-                playerX.sort();
-            } else {
-                node.classList.add("o");
-                saveIndex = 1;
-                playerO.push(cellId);
-                playerO.sort();
+        //drawing game board
+        function drawBoard() {
+            while (board.hasChildNodes()) {
+                board.removeChild(board.firstChild);
             }
-            cell.appendChild(node);
-            cell.removeEventListener('click', click);
-            cell.classList.add("notAllowed");  
-        }  
-        var check = isWinner();
-        if(check[0]) {
-            //add animation to winning set
-            for(let z=0; z < check[1].length; z++) {
-                elem(check[1][z]).classList.add("blink_me");
+            for (let i = 0; i < game.boardParams.height; i++) {
+                let row = newElem("div");
+                board.appendChild(row);
+                row.classList.add("row");
+                for (let j = 0; j < game.boardParams.width; j++) {
+                    let cell = newElem("div");
+                    row.appendChild(cell);
+                    cell.classList.add("cell");
+                    cell.id = String.fromCharCode(i + "a".charCodeAt(0)) + j;
+                    gameBoard.push(cell.id);
+                    cell.addEventListener('click', click, false);
+                }
             }
-            setTimeout(function() {
+        }
+
+        var win = [];
+        possibleWinners();
+
+        function possibleWinners() {
+            win.push(["a0", "a1", "a2"]);
+            win.push(["b0", "b1", "b2"]);
+            win.push(["c0", "c1", "c2"]);
+            win.push(["a0", "b0", "c0"]);
+            win.push(["a1", "b1", "c1"]);
+            win.push(["a2", "b2", "c2"]);
+            win.push(["a0", "b1", "c2"]);
+            win.push(["a2", "b1", "c0"]);
+        }
+
+        var playerX = [];
+        var playerO = [];
+
+        function reset() {
+            playerX = [];
+            playerO = [];
+        }
+
+        var saveIndex;
+        function click(event) {
+            var cellId = event.target.id;
+            var cell = elem(cellId);
+            if (!cell.hasChildNodes()) {
+                var node = document.createElement("div");
+                saveIndex = saveIndex | 1;
+                if (saveIndex == 1) {
+                    node.classList.add("x");
+                    saveIndex = 2;
+                    playerX.push(cellId);
+                    playerX.sort();
+                } else {
+                    node.classList.add("o");
+                    saveIndex = 1;
+                    playerO.push(cellId);
+                    playerO.sort();
+                }
+                cell.appendChild(node);
+                cell.removeEventListener('click', click);
+                cell.classList.add("notAllowed");
+            }
+            var check = isWinner();
+            if (check[0]) {
+                //add animation to winning set
+                for (let z = 0; z < check[1].length; z++) {
+                    elem(check[1][z]).classList.add("blink_me");
+                }
+                setTimeout(function () {
+                    displayModal();
+                }, 5000);
+            } else if (playerX.length + playerO.length == 9) {
                 displayModal();
-            }, 5000);
-        } else if (playerX.length + playerO.length == 9) {
-            displayModal();
+            }
         }
-    }
-    function displayModal() {
-        // Get the modal
-        var modal = elem('myModal');
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        // When the user clicks on the button, open the modal 
-        modal.style.display = "block";
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-            reset();
-            drawBoard();
-        }
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
+        function displayModal() {
+            // Get the modal
+            var modal = elem('myModal');
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            // When the user clicks on the button, open the modal 
+            modal.style.display = "block";
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
                 modal.style.display = "none";
                 reset();
                 drawBoard();
             }
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    reset();
+                    drawBoard();
+                }
+            }
         }
-    }
-    function isWinner() {
-        var winning = false;
-        var playerSet = [];
+        function isWinner() {
+            var winning = false;
+            var playerSet = [];
 
-        if (saveIndex == 2) {
-            playerSet = playerX;
-        }
-        else {
-            playerSet = playerO;
-        }
-        var setSet = [];
-    //winning only if there has been enough moves
-        if(playerSet.length >= gameBoard.width) {
-            //go through all possible win scenarios
-            for(let i=0 ; i < win.length; i++) {
-                var winSet = win[i];
-                var winSetFound = true;
+            if (saveIndex == 2) {
+                playerSet = playerX;
+            }
+            else {
+                playerSet = playerO;
+            }
+            var setSet = [];
+            //winning only if there has been enough moves
+            if (playerSet.length >= gameBoard.width) {
+                //go through all possible win scenarios
+                for (let i = 0; i < win.length; i++) {
+                    var winSet = win[i];
+                    var winSetFound = true;
 
-                //go through every element of winSet
-                for(let j=0; j < winSet.length; j++) {
-                    var match = false;
-                    //go through every element of playerSet
-                    for(let x=0; x < playerSet.length; x++) {
-                        if(playerSet[x] == winSet[j]) {
-                            match = true;
+                    //go through every element of winSet
+                    for (let j = 0; j < winSet.length; j++) {
+                        var match = false;
+                        //go through every element of playerSet
+                        for (let x = 0; x < playerSet.length; x++) {
+                            if (playerSet[x] == winSet[j]) {
+                                match = true;
+                                break;
+                            }
+                        }
+                        // if value not found, move on to another set
+                        if (match == false) {
+                            winSetFound = false;
                             break;
                         }
                     }
-                    // if value not found, move on to another set
-                    if (match == false) {
-                        winSetFound = false;
+
+                    if (winSetFound == true) {
+                        winning = true;
+                        setSet = winSet;
                         break;
                     }
                 }
 
-                if (winSetFound == true) {
-                    winning = true;
-                    setSet = winSet;
-                    break;
-                }
             }
-            
+
+            return [winning, setSet];
         }
 
-        return [winning, setSet];
-    }
-
-    window.onload = drawBoard;
+        window.onload = drawBoard;
     </script>
 </body>
+
 </html>
