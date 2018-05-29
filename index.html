@@ -221,8 +221,6 @@
         const board = elem("board");
 
         var gameBoard = [];
-        gameBoard.width = game.boardParams.width;
-        gameBoard.height = game.boardParams.height;
 
         //drawing game board
         function drawBoard() {
@@ -294,9 +292,12 @@
                 for (let z = 0; z < check[1].length; z++) {
                     elem(check[1][z]).classList.add("blink_me");
                 }
+                for (let x = 0; x < gameBoard.length; x++) {
+                    elem(gameBoard[x]).removeEventListener('click', click, false);
+                }
                 setTimeout(function () {
                     displayModal();
-                }, 5000);
+                }, 4000);
             } else if (playerX.length + playerO.length == 9) {
                 displayModal();
             }
@@ -335,7 +336,7 @@
             }
             var setSet = [];
             //winning only if there has been enough moves
-            if (playerSet.length >= gameBoard.width) {
+            if (playerSet.length >= game.boardParams.width) {
                 //go through all possible win scenarios
                 for (let i = 0; i < win.length; i++) {
                     var winSet = win[i];
